@@ -16,7 +16,7 @@
 <meta property="og:url" content="https://jazznilow-art.github.io/Filme-pele/">
 
 <!-- JSON-LD Estruturado -->
-<script type="application/ld+json">
+<script id="movie-data" type="application/ld+json">
 {
  "@context": "https://schema.org",
  "@type": "Movie",
@@ -37,38 +37,11 @@
  "countryOfOrigin": {"@type": "Country","name": "BR"},
  "contentRating": "10",
  "director": [
-   {
-     "@type": "Person",
-     "name": "Daniele Leite",
-     "image": "https://media.themoviedb.org/t/p/w300_and_h450_face/8Y32GlcxRMC9VT0KY6BgdMDpK72.jpg"
-   },
-   {
-     "@type": "Person",
-     "name": "Lucas Santos",
-     "image": "https://media.themoviedb.org/t/p/w300_and_h450_face/AsPngonu72ZMBc02pbAZHerbIeY.jpg"
-   }
+   {"@type": "Person","name": "Daniele Leite","image": "https://media.themoviedb.org/t/p/w300_and_h450_face/8Y32GlcxRMC9VT0KY6BgdMDpK72.jpg"},
+   {"@type": "Person","name": "Lucas Santos","image": "https://media.themoviedb.org/t/p/w300_and_h450_face/AsPngonu72ZMBc02pbAZHerbIeY.jpg"}
  ],
  "actor": [
-   {
-     "@type": "Person",
-     "name": "Adalberto Gercino",
-     "image": "https://media.themoviedb.org/t/p/w300_and_h450_face/t6XHgTxsjuAm1DzuJZU6zGZ01Hf.jpg"
-   }
- ],
- "producer": {"@type": "Person","name": "Daniele Leite"},
- "musicBy": {"@type": "Person","name": "Lucas Santos"},
- "productionCompany": {
-   "@type": "Organization",
-   "name": "Casa das Caiporas",
-   "logo": {"@type": "ImageObject","url": "https://media.themoviedb.org/t/p/original/y5v3xHTiWegWSoiwgv2qHSLA3mC.png"}
- },
- "identifier": [
-   {"@type": "PropertyValue","name": "IMDb","value": "tt35727739"},
-   {"@type": "PropertyValue","name": "TMDB","value": "1297307"}
- ],
- "sameAs": [
-   "https://www.themoviedb.org/movie/1297307-o-carnaval-e-de-pele",
-   "https://www.imdb.com/title/tt35727739/"
+   {"@type": "Person","name": "Adalberto Gercino","image": "https://media.themoviedb.org/t/p/w300_and_h450_face/t6XHgTxsjuAm1DzuJZU6zGZ01Hf.jpg"}
  ],
  "trailer": {
    "@type": "VideoObject",
@@ -84,38 +57,87 @@
 }
 </script>
 
+<style>
+/* === Estilo do Card === */
+.film-card {
+  max-width: 900px;
+  margin: 40px auto;
+  border: 1px solid #ccc;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  background-color: #fff;
+}
+.film-card-header { display: flex; align-items: center; padding: 20px; }
+.film-card-header img { width: 250px; border-radius: 12px; margin-right: 20px; }
+.film-card-header h1 { font-size: 2em; margin: 0; }
+.film-card-description { padding: 0 20px 20px 20px; line-height: 1.5em; }
+.film-frames { display: flex; overflow-x: auto; padding: 0 20px 20px 20px; gap: 10px; }
+.film-frames img { width: 180px; border-radius: 8px; flex-shrink: 0; }
+.film-team { display: flex; flex-wrap: wrap; gap: 20px; padding: 0 20px 20px 20px; align-items: center; }
+.film-team img { width: 100px; border-radius: 50%; }
+.film-team div { text-align: center; font-size: 0.9em; }
+.film-links { padding: 0 20px 20px 20px; }
+.film-links a { margin-right: 15px; color: #1a73e8; text-decoration: none; }
+.film-links a:hover { text-decoration: underline; }
+</style>
 </head>
+
 <body>
 
-<h1>O Carnaval é de Pelé</h1>
+<div class="film-card">
+  <div class="film-card-header">
+    <img id="poster" src="" alt="Poster do filme">
+    <h1 id="title"></h1>
+  </div>
 
-<!-- Pôster do filme -->
-<img src="https://image.tmdb.org/t/p/original/waTnocnnowYYPPWQFACknv2cFkE.jpg" alt="Poster do filme O Carnaval é de Pelé" width="600">
+  <div class="film-card-description">
+    <p id="description"></p>
+  </div>
 
-<!-- Frames do filme -->
-<h2>Frames do filme</h2>
-<img src="https://image.tmdb.org/t/p/original/r4kIYex0L81ms4HnkjxmuK5USLw.jpg" alt="Frame 1" width="600">
-<img src="https://image.tmdb.org/t/p/original/6JdPLBtSfE14AlE95TT62aRmABS.jpg" alt="Frame 2" width="600">
-<img src="https://image.tmdb.org/t/p/original/3nxhK6dATU3k0tmacEfnsabpxBr.jpg" alt="Frame 3" width="600">
-<img src="https://image.tmdb.org/t/p/original/zJ4So5O99zltK9FUfnRJRZfF2Eu.jpg" alt="Frame 4" width="600">
+  <h2 style="padding:0 20px;">Frames do filme</h2>
+  <div class="film-frames" id="frames"></div>
 
-<!-- Sinopse -->
-<p>Pelé, um enfermeiro aposentado, relembra seus momentos como Mateus do grupo centenário Boi Tira-Teima. Enquanto costura o boi que dará vida ao folguedo, ele costura também suas memórias.</p>
+  <h2 style="padding:0 20px;">Equipe</h2>
+  <div class="film-team" id="team"></div>
 
-<!-- Trailer -->
-<a href="https://www.youtube.com/watch?v=Zz-MBzTh0SM" target="_blank">Assista ao trailer no YouTube</a>
+  <div class="film-links" id="links"></div>
+</div>
 
-<!-- Equipe -->
-<h2>Equipe</h2>
-<p>Diretores:</p>
-<img src="https://media.themoviedb.org/t/p/w300_and_h450_face/8Y32GlcxRMC9VT0KY6BgdMDpK72.jpg" alt="Daniele Leite" width="150">
-<img src="https://media.themoviedb.org/t/p/w300_and_h450_face/AsPngonu72ZMBc02pbAZHerbIeY.jpg" alt="Lucas Santos" width="150">
+<script>
+// === Conexão com JSON-LD ===
+const data = JSON.parse(document.getElementById('movie-data').textContent);
 
-<p>Ator principal:</p>
-<img src="https://media.themoviedb.org/t/p/w300_and_h450_face/t6XHgTxsjuAm1DzuJZU6zGZ01Hf.jpg" alt="Adalberto Gercino" width="150">
+// Poster e título
+document.getElementById('poster').src = data.image[0];
+document.getElementById('title').textContent = data.name;
+document.getElementById('description').textContent = data.description;
 
-<!-- Links externos -->
-<p>Saiba mais: <a href="https://www.imdb.com/title/tt35727739/" target="_blank">IMDb</a> | <a href="https://www.themoviedb.org/movie/1297307-o-carnaval-e-de-pele" target="_blank">TMDB</a></p>
+// Frames
+const framesContainer = document.getElementById('frames');
+data.image.slice(1).forEach(url => {
+  const img = document.createElement('img');
+  img.src = url;
+  framesContainer.appendChild(img);
+});
+
+// Equipe: diretores + ator
+const teamContainer = document.getElementById('team');
+[...data.director, ...data.actor].forEach(person => {
+  const div = document.createElement('div');
+  div.innerHTML = `<img src="${person.image}" alt="${person.name}"><p>${person.name}</p>`;
+  teamContainer.appendChild(div);
+});
+
+// Links
+const linksContainer = document.getElementById('links');
+linksContainer.innerHTML = `
+  <a href="${data.trailer.contentUrl}" target="_blank">Assista ao trailer</a>
+  <a href="https://www.imdb.com/title/tt35727739/" target="_blank">IMDb</a>
+  <a href="https://www.themoviedb.org/movie/1297307-o-carnaval-e-de-pele" target="_blank">TMDB</a>
+`;
+</script>
 
 </body>
 </html>
