@@ -58,7 +58,6 @@
 </script>
 
 <style>
-/* === Estilo do Card === */
 .film-card {
   max-width: 900px;
   margin: 40px auto;
@@ -69,9 +68,9 @@
   font-family: Arial, sans-serif;
   background-color: #fff;
 }
-.film-card-header { display: flex; align-items: center; padding: 20px; }
-.film-card-header img { width: 250px; border-radius: 12px; margin-right: 20px; }
-.film-card-header h1 { font-size: 2em; margin: 0; }
+.film-card-header { display: flex; align-items: center; padding: 20px; flex-wrap: wrap; }
+.film-card-header img { width: 250px; border-radius: 12px; margin-right: 20px; margin-bottom: 10px; }
+.film-card-header h1 { font-size: 2em; margin: 0; flex: 1 1 300px; }
 .film-card-description { padding: 0 20px 20px 20px; line-height: 1.5em; }
 .film-frames { display: flex; overflow-x: auto; padding: 0 20px 20px 20px; gap: 10px; }
 .film-frames img { width: 180px; border-radius: 8px; flex-shrink: 0; }
@@ -81,12 +80,20 @@
 .film-links { padding: 0 20px 20px 20px; }
 .film-links a { margin-right: 15px; color: #1a73e8; text-decoration: none; }
 .film-links a:hover { text-decoration: underline; }
+.trailer-container { padding: 20px; text-align: center; }
+.trailer-container iframe { width: 100%; max-width: 800px; height: 450px; border-radius: 12px; }
 </style>
 </head>
 
 <body>
 
 <div class="film-card">
+
+  <!-- Vídeo em destaque -->
+  <div class="trailer-container">
+    <iframe id="trailer" src="" title="Trailer de O Carnaval é de Pelé" frameborder="0" allowfullscreen></iframe>
+  </div>
+
   <div class="film-card-header">
     <img id="poster" src="" alt="Poster do filme">
     <h1 id="title"></h1>
@@ -113,6 +120,9 @@ const data = JSON.parse(document.getElementById('movie-data').textContent);
 document.getElementById('poster').src = data.image[0];
 document.getElementById('title').textContent = data.name;
 document.getElementById('description').textContent = data.description;
+
+// Trailer em destaque
+document.getElementById('trailer').src = data.trailer.embedUrl;
 
 // Frames
 const framesContainer = document.getElementById('frames');
